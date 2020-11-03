@@ -1,0 +1,16 @@
+**Script run by limited user on sogo or on new server
+**Deleting user 
+    - interactive
+	- from ipa
+	- Data from /vmail on sogo server
+	- Exchange contact (Future plan)
+
+**Remove permission of GUI remove
+	
+**Cronjob with report
+	- cronjob each week on sogo
+	- mailx send report 	
+		* equal or not
+		* period of time (date to date)
+		* if not , Users more are ....
+		* Automatically remove or not (Idea Mai: move from vmail to discarded then the next run will remove the old extras)

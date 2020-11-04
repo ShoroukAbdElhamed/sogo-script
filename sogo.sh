@@ -7,24 +7,53 @@ echo "*******************************************************************"
 #while [ 1 ]
 #do
 echo "please enter user name : "
-read -e ch
+read -e name
 #clear
 
 
 #Delete From ipa
 echo -n  'Ph@rm@$0ftP@ssw0rd777' | kinit admin  > /dev/null
-ipa user-find $ch > /dev/null
+ipa user-find $name > /dev/null
 
 
 if [ $? -eq 0 ]
 then
         echo " "
-        echo "User was found"
-        echo "User's data:"
-        ipa user-find $ch
+	echo "User was found"
+	echo "User's data:"
+	ipa user-find $name
+	while [ 1 ]
+	do
+ 
+		echo "do you want to delete $name ? (Y or N)"
+		read -e ch
+		if [ $ch = "Y" ] || [ $ch = "y" ]
+		then
+			
+			mv /home/vmail/$name  /home/discarded
+			ipa user-del $name
+
+			exit
+		elif [ $ch = "N" ] || [ $ch = "n" ]
+		then
+			exit 
+		else
+			echo "Wrong Choice, please try again !"
+	
+		
+		fi
+	done		
+	
 else
-        echo " "
-        echo "This user doesn't exist. Please check the username "
-        exit 1
+	echo " "
+	echo "This user doesn't exist. Please check the username "
+	ls /home/vmail/* |grep $name > /dev/null
+	if [ $? -eq 0 ]
+	then
+		echo "This user is removed from freeipa and will be discarded"
+		mv  /home/vmail/$name  /home/discarded
+
+	fi
+	exit 1
 fi
-#done
+

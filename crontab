@@ -1,0 +1,26 @@
+#!/bin/bash
+clear
+
+rm -Rf /home/discarded/*
+if [ $? -eq 0 ]
+then
+        echo `date`      "The Discarded mailboxes were removed"  >> Report-names
+else
+        echo `date`      "Couldn't delete the discarded mailboxes" >> Report-names
+
+fi
+
+for name in $(ls -1 /home/vmail)
+do
+        ipa user-find $name > /dev/null
+        if [ $? -eq 0 ]
+        then
+                continue
+        else
+                mv  /home/vmail/$name  /home/discarded
+                echo `date`     "$name" >> Report-names
+        fi
+done
+
+echo "Cronjob Report of deleted users" | mailx -s "Weekly Report" -r devops2  -a Report-names devops2
+

@@ -3,7 +3,6 @@ clear
 echo "--------------- User Deletion Script --------------------"
 echo "*******************************************************************"
 
-
 #while [ 1 ]
 #do
 echo "please enter user name : "
@@ -12,7 +11,7 @@ read -e name
 
 
 #Delete From ipa
-echo -n  'Ph@rm@$0ftP@ssw0rd777' | kinit admin  > /dev/null
+echo 'VXNlckFkbSFuQFBoQHJtQDU1NQo=' | openssl enc -base64 -d | kinit useradmin  > /dev/null
 ipa user-find $name > /dev/null
 
 
@@ -32,7 +31,8 @@ then
 			
 			mv /home/vmail/$name  /home/discarded
 			ipa user-del $name
-
+			echo "user: "$name " was deleted by: " `whoami` "at time: " `date` >> /scripts/deletion-script-log
+			
 			exit
 		elif [ $ch = "N" ] || [ $ch = "n" ]
 		then
@@ -56,4 +56,3 @@ else
 	fi
 	exit 1
 fi
-

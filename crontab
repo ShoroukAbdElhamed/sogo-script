@@ -1,6 +1,14 @@
 #!/bin/bash
 clear
 
+#New part
+ls /home/discarded | sed '/Maildir/d' > /tmp/to-be-removed
+for user in $(cat /tmp/to-be-removed)
+do
+        sogo-tool remove "$user"
+done
+##
+
 rm -Rf /home/discarded/*
 if [ $? -eq 0 ]
 then
